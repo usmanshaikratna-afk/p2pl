@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Smart Road Condition Monitoring System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* About page specific styles */
+        .about-hero {
+            background: linear-gradient(135deg, rgba(10, 36, 99, 0.9) 0%, rgba(30, 61, 143, 0.9) 100%), 
+                        url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-green), #1e7d73);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary-blue), var(--secondary-green));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+            border-left: 4px solid var(--secondary-green);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--primary-blue);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 4px solid var(--secondary-green);
+            border-radius: 50%;
+            top: 15px;
+            right: -17px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -16px;
+            right: auto;
+            border-color: var(--primary-blue);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+        }
+
+        .stat-box:hover::before {
+            animation: shine 1.5s ease;
+        }
+
+        @keyframes shine {
+            100% { transform: translateX(100%); }
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-page="about">
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-road logo-icon"></i>
+                    <span>Smart Road Monitor</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="map.html">Live Road Map</a></li>
+                    <li><a href="report.html">Report Issue</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Revolutionizing Road Safety</h1>
+            <p>We combine cutting-edge AI technology with community-powered reporting to create safer roads for everyone. Our mission is to prevent accidents before they happen.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Mission Section -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Mission & Vision</h2>
+                    <p>Building the future of urban infrastructure monitoring</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h3>Our Mission</h3>
+                                <p>To leverage AI and IoT technology for real-time road condition monitoring, reducing accidents by 40% and cutting maintenance response times by 60%.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h3>Our Vision</h3>
+                                <p>A world where road infrastructure is self-monitoring, self-reporting, and predictive - preventing issues before they become hazards.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <h3>Our Values</h3>
+                                <p>Safety first, innovation always, community engagement, and transparency in all operations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Problem & Solution -->
+        <section class="section-padding" style="background-color: rgba(42, 157, 143, 0.05);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>The Challenge & Our Solution</h2>
+                    <p>Addressing critical infrastructure issues with smart technology</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card" style="border-top: 5px solid var(--accent-red);">
+                        <div class="card-content">
+                            <h3 style="color: var(--accent-red);">
+                                <i class="fas fa-exclamation-triangle"></i> The Problem
+                            </h3>
+                            <p>Poor road conditions cause:</p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li><strong>1.5 million accidents</strong> annually worldwide</li>
+                                <li><strong>$6 billion</strong> in vehicle damage each year</li>
+                                <li><strong>40% longer</strong> emergency response times</li>
+                                <li><strong>Manual inspection</strong> that misses 65% of issues</li>
+                                <li><strong>Reactive</strong> rather than preventive maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="border-top: 5px solid var(--secondary-green);">
+                        <div class="card-content">
+                            <h3 style="color: var(--secondary-green);">
+                                <i class="fas fa-lightbulb"></i> Our Solution
+                            </h3>
+                            <p>Smart Road Monitor provides:</p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li><strong>Real-time AI detection</strong> of road defects</li>
+                                <li><strong>IoT sensors</strong> on municipal vehicles</li>
+                                <li><strong>Interactive public map</strong> with live updates</li>
+                                <li><strong>Citizen reporting portal</strong> for community engagement</li>
+                                <li><strong>Predictive analytics</strong> for preventive maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Technology Stack -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Technology Stack</h2>
+                    <p>Powered by cutting-edge technologies</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <div class="tech-icons" style="justify-content: center; gap: 2rem;">
+                            <div class="tech-icon">
+                                <i class="fas fa-robot" style="font-size: 3rem;"></i>
+                                <span>AI & Computer Vision</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px; text-align: center;">YOLOv5, TensorFlow</p>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-satellite" style="font-size: 3rem;"></i>
+                                <span>IoT Sensors</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px; text-align: center;">Arduino, Raspberry Pi</p>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-map-marked-alt" style="font-size: 3rem;"></i>
+                                <span>Geospatial Mapping</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px; text-align: center;">Leaflet.js, Mapbox</p>
+                            </div>
+                            <div class="tech-icon">
+                                <i class="fas fa-cloud" style="font-size: 3rem;"></i>
+                                <span>Cloud Infrastructure</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px; text-align: center;">AWS, Firebase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Timeline -->
+        <section class="section-padding" style="background-color: rgba(30, 61, 143, 0.05);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>How It Works</h2>
+                    <p>From detection to resolution - our complete workflow</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1. Data Collection</h3>
+                            <p>Municipal vehicles equipped with IoT sensors collect road condition data including vibrations, GPS location, and high-resolution images.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-car"></i>
+                                    <span>Vehicle Sensors</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-camera"></i>
+                                    <span>360° Cameras</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2. AI Processing</h3>
+                            <p>Our deep learning models analyze sensor data to identify potholes, cracks, and other defects with 94% accuracy.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Neural Networks</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Real-time Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>3. Issue Classification</h3>
+                            <p>Detected issues are categorized by type, severity, and priority for appropriate response.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Smart Classification</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-exclamation"></i>
+                                    <span>Priority Scoring</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>4. Live Mapping</h3>
+                            <p>Issues are plotted on an interactive public map with color-coded markers indicating severity levels.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-map"></i>
+                                    <span>Interactive Map</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-broadcast-tower"></i>
+                                    <span>Live Updates</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>5. Citizen Engagement</h3>
+                            <p>The public can view road conditions, report new issues, and track resolution progress.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-users"></i>
+                                    <span>Community Portal</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Mobile Reporting</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>6. Resolution Tracking</h3>
+                            <p>Maintenance teams receive prioritized assignments and citizens get real-time updates on fixes.</p>
+                            <div class="tech-icons" style="justify-content: start; margin-top: 1rem;">
+                                <div class="tech-icon">
+                                    <i class="fas fa-tools"></i>
+                                    <span>Team Dispatch</span>
+                                </div>
+                                <div class="tech-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Progress Tracking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Impact Statistics -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Impact</h2>
+                    <p>Transforming road safety across cities</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h3 style="font-size: 3rem; margin: 0; color: var(--accent-yellow);">1247</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">Potholes Detected</p>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <h3 style="font-size: 3rem; margin: 0; color: var(--accent-yellow);">342</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">Accidents Prevented</p>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <h3 style="font-size: 3rem; margin: 0; color: var(--accent-yellow);">892</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">Issues Resolved</p>
+                    </div>
+                    
+                    <div class="stat-box">
+                        <h3 style="font-size: 3rem; margin: 0; color: var(--accent-yellow);">94%</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">Detection Accuracy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+        <section class="section-padding" style="background-color: rgba(42, 157, 143, 0.05);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Team</h2>
+                    <p>The experts behind Smart Road Monitor</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3>Dr. Sarah Chen</h3>
+                            <p style="color: var(--secondary-green); font-weight: 600;">AI & Computer Vision Lead</p>
+                            <p>PhD in Computer Science, 10+ years in machine learning and urban infrastructure.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3>Michael Rodriguez</h3>
+                            <p style="color: var(--secondary-green); font-weight: 600;">IoT & Hardware Director</p>
+                            <p>Former automotive engineer specializing in sensor technology and embedded systems.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3>Priya Sharma</h3>
+                            <p style="color: var(--secondary-green); font-weight: 600;">Urban Planning Advisor</p>
+                            <p>15 years experience in municipal infrastructure and public policy development.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Smart Road Monitor</h3>
+                    <p>An AI-powered system for monitoring road conditions in real-time to prevent accidents and improve maintenance efficiency.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="index.html" style="color: var(--light-text); text-decoration: none;">Home</a></li>
+                        <li><a href="about.html" style="color: var(--light-text); text-decoration: none;">About</a></li>
+                        <li><a href="map.html" style="color: var(--light-text); text-decoration: none;">Live Map</a></li>
+                        <li><a href="report.html" style="color: var(--light-text); text-decoration: none;">Report Issue</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Research & Development</h3>
+                    <p>Access our technical papers, API documentation, and research findings.</p>
+                    <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">
+                        <i class="fas fa-file-download"></i> Download Whitepaper
+                    </a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Smart Road Condition Monitoring System. All rights reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Patents pending: US-2023-SRM-001, US-2023-SRM-002</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

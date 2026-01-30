@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Road Condition Monitoring System - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="home">
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-road logo-icon"></i>
+                    <span>Smart Road Monitor</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="map.html">Live Road Map</a></li>
+                    <li><a href="report.html">Report Issue</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Making Roads Safer with Smart Technology</h1>
+                        <p>Our AI-powered system detects road defects like potholes, cracks, and unmarked speed humps in real-time, helping prevent accidents and improve road maintenance efficiency.</p>
+                        <div class="hero-btns">
+                            <a href="map.html" class="btn btn-primary">
+                                <i class="fas fa-map-marked-alt"></i> View Road Map
+                            </a>
+                            <a href="report.html" class="btn btn-secondary">
+                                <i class="fas fa-exclamation-triangle"></i> Report Road Issue
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="stat-card">
+                            <span class="stat-number" id="potholesCount">0</span>
+                            <span class="stat-label">Potholes Detected</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <span class="stat-number" id="accidentsPrevented">0</span>
+                        <span class="stat-label">Accidents Prevented</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="roadsMonitored">0</span>
+                        <span class="stat-label">Roads Monitored</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="issuesResolved">0</span>
+                        <span class="stat-label">Issues Resolved</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-title">
+                    <h2>How It Works</h2>
+                    <p>Our system uses cutting-edge technology to monitor road conditions in real-time</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-car" style="color: var(--secondary-green); margin-right: 10px;"></i> IoT Sensors</h3>
+                            <p>Vehicles equipped with IoT sensors collect road condition data including vibrations, GPS location, and images.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-brain" style="color: var(--secondary-green); margin-right: 10px;"></i> AI Analysis</h3>
+                            <p>AI algorithms analyze the collected data to identify road defects like potholes, cracks, and speed humps.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-map" style="color: var(--secondary-green); margin-right: 10px;"></i> Real-Time Mapping</h3>
+                            <p>Detected issues are displayed on an interactive map with color-coded markers based on severity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="section-padding" style="background-color: rgba(42, 157, 143, 0.05);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Key Features</h2>
+                    <p>Comprehensive road monitoring solution for smarter cities</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-bolt" style="color: var(--accent-yellow); margin-right: 10px;"></i> Real-time Detection</h3>
+                            <p>Instant identification of road issues using AI-powered computer vision and IoT sensors.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-users" style="color: var(--accent-yellow); margin-right: 10px;"></i> Citizen Reporting</h3>
+                            <p>Easy-to-use portal for citizens to report road issues with location and photo upload.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><i class="fas fa-chart-line" style="color: var(--accent-yellow); margin-right: 10px;"></i> Analytics Dashboard</h3>
+                            <p>Comprehensive dashboard for authorities to monitor, prioritize, and resolve road issues.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Smart Road Monitor</h3>
+                    <p>An AI-powered system for monitoring road conditions in real-time to prevent accidents and improve maintenance efficiency.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="index.html" style="color: var(--light-text); text-decoration: none;">Home</a></li>
+                        <li><a href="about.html" style="color: var(--light-text); text-decoration: none;">About</a></li>
+                        <li><a href="map.html" style="color: var(--light-text); text-decoration: none;">Live Map</a></li>
+                        <li><a href="report.html" style="color: var(--light-text); text-decoration: none;">Report Issue</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Subscribe to Updates</h3>
+                    <p>Get notified about road conditions and updates in your area.</p>
+                    <div style="display: flex; margin-top: 1rem;">
+                        <input type="email" placeholder="Your email" style="flex: 1; padding: 0.8rem; border: none; border-radius: 5px 0 0 5px;">
+                        <button class="btn btn-primary" style="border-radius: 0 5px 5px 0;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Smart Road Condition Monitoring System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

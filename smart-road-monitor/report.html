@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Road Issue - Smart Road Condition Monitoring System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Report page specific styles */
+        .report-hero {
+            background: linear-gradient(135deg, rgba(30, 61, 143, 0.9) 0%, rgba(42, 157, 143, 0.9) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .report-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .location-preview {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .location-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .location-accuracy {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .accuracy-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .accuracy-fill {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+        }
+
+        .location-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .severity-visual {
+            display: flex;
+            gap: 20px;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .severity-visual-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .severity-visual-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .severity-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 10px;
+            color: white;
+        }
+
+        .severity-low .severity-icon {
+            background: linear-gradient(135deg, #2a9d8f, #1e7d73);
+        }
+
+        .severity-medium .severity-icon {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+        }
+
+        .severity-high .severity-icon {
+            background: linear-gradient(135deg, #e63946, #c53030);
+        }
+
+        .image-preview-container {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: var(--secondary-green);
+            color: white;
+        }
+
+        .step.completed .step-circle {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 3px;
+            background: #eee;
+            margin-top: 20px;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .location-map-preview {
+            height: 200px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .location-error {
+            display: none;
+            padding: 1rem;
+            background: rgba(231, 57, 70, 0.1);
+            border-left: 4px solid var(--accent-red);
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .location-success {
+            display: none;
+            padding: 1rem;
+            background: rgba(42, 157, 143, 0.1);
+            border-left: 4px solid var(--secondary-green);
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .auto-suggest {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: calc(100% - 2rem);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .suggest-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .suggest-item:hover {
+            background: #f5f5f5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .step-indicator {
+                gap: 10px;
+            }
+            
+            .step {
+                flex: 1;
+            }
+            
+            .step-line {
+                display: none;
+            }
+            
+            .severity-visual {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body data-page="report">
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-road logo-icon"></i>
+                    <span>Smart Road Monitor</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="map.html">Live Road Map</a></li>
+                    <li><a href="report.html" class="active">Report Issue</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Report Hero -->
+    <section class="report-hero">
+        <div class="container">
+            <h1>Report a Road Issue</h1>
+            <p>Help make our roads safer by reporting potholes, cracks, and other hazards. Your report matters.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="section-padding">
+            <div class="container">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step active" data-step="1">
+                        <div class="step-circle">1</div>
+                        <span>Location</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="2">
+                        <div class="step-circle">2</div>
+                        <span>Issue Details</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="3">
+                        <div class="step-circle">3</div>
+                        <span>Review & Submit</span>
+                    </div>
+                </div>
+                
+                <!-- Form Container -->
+                <div class="form-container">
+                    <form id="reportForm">
+                        <!-- Step 1: Location -->
+                        <div class="form-step active" id="step1">
+                            <h3 style="margin-bottom: 1.5rem;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--secondary-green); margin-right: 10px;"></i>
+                                Where is the issue located?
+                            </h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="issueLocation">
+                                    <i class="fas fa-search-location"></i> Search or Enter Address
+                                </label>
+                                <div style="position: relative;">
+                                    <input type="text" class="form-control" id="issueLocation" 
+                                           placeholder="Type address, landmark, or click 'Detect My Location'" 
+                                           required>
+                                    <div class="auto-suggest" id="locationSuggestions"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Location Actions -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                                <button type="button" id="detectLocation" class="btn" style="background-color: var(--secondary-green); color: white;">
+                                    <i class="fas fa-location-arrow"></i> Detect My Location
+                                </button>
+                                <button type="button" id="useMap" class="btn btn-secondary">
+                                    <i class="fas fa-map"></i> Select on Map
+                                </button>
+                                <button type="button" id="clearLocation" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Clear
+                                </button>
+                            </div>
+                            
+                            <!-- Location Preview -->
+                            <div class="location-preview" id="locationPreview">
+                                <div class="location-details">
+                                    <i class="fas fa-check-circle" style="color: #4CAF50; font-size: 1.2rem;"></i>
+                                    <div>
+                                        <strong id="detectedAddress">Address detected</strong>
+                                        <div class="location-accuracy" id="accuracyInfo">
+                                            <span>Accuracy: </span>
+                                            <div class="accuracy-bar">
+                                                <div class="accuracy-fill" id="accuracyFill" style="width: 85%"></div>
+                                            </div>
+                                            <span id="accuracyText">High</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="location-actions">
+                                    <button type="button" class="btn btn-secondary" id="adjustLocation">
+                                        <i class="fas fa-edit"></i> Adjust Location
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="viewOnMap">
+                                        <i class="fas fa-external-link-alt"></i> View on Map
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Location Map Preview -->
+                            <div class="location-map-preview" id="locationMapPreview">
+                                <div style="text-align: center;">
+                                    <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                    <p>Location will appear here after detection</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Location Errors/Success -->
+                            <div class="location-error" id="locationError">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span id="errorMessage">Unable to detect location. Please check browser permissions or enter address manually.</span>
+                            </div>
+                            
+                            <div class="location-success" id="locationSuccess">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Location detected successfully! You can adjust the pin if needed.</span>
+                            </div>
+                            
+                            <!-- Navigation -->
+                            <div class="form-navigation">
+                                <div></div>
+                                <button type="button" class="btn btn-primary" id="nextStep1">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Issue Details -->
+                        <div class="form-step" id="step2">
+                            <h3 style="margin-bottom: 1.5rem;">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--secondary-green); margin-right: 10px;"></i>
+                                Tell us about the issue
+                            </h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Type of Issue</label>
+                                <div class="card-grid" style="margin-top: 1rem;">
+                                    <div class="issue-type-option">
+                                        <input type="radio" id="typePothole" name="issueType" value="pothole" required>
+                                        <label for="typePothole">
+                                            <div class="card">
+                                                <div class="card-content" style="text-align: center;">
+                                                    <i class="fas fa-road" style="font-size: 2rem; color: var(--accent-red); margin-bottom: 10px;"></i>
+                                                    <h4 style="margin: 0;">Pothole</h4>
+                                                    <p style="font-size: 0.9rem; margin: 5px 0 0;">Deep holes in the road surface</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="issue-type-option">
+                                        <input type="radio" id="typeCrack" name="issueType" value="crack" required>
+                                        <label for="typeCrack">
+                                            <div class="card">
+                                                <div class="card-content" style="text-align: center;">
+                                                    <i class="fas fa-bolt" style="font-size: 2rem; color: var(--accent-yellow); margin-bottom: 10px;"></i>
+                                                    <h4 style="margin: 0;">Crack/Fissure</h4>
+                                                    <p style="font-size: 0.9rem; margin: 5px 0 0;">Cracks or splits in pavement</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="issue-type-option">
+                                        <input type="radio" id="typeHump" name="issueType" value="speed-hump" required>
+                                        <label for="typeHump">
+                                            <div class="card">
+                                                <div class="card-content" style="text-align: center;">
+                                                    <i class="fas fa-car-burst" style="font-size: 2rem; color: var(--secondary-green); margin-bottom: 10px;"></i>
+                                                    <h4 style="margin: 0;">Speed Hump</h4>
+                                                    <p style="font-size: 0.9rem; margin: 5px 0 0;">Unmarked or damaged speed bump</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Severity Level</label>
+                                <p style="margin-bottom: 1rem; color: #666;">How dangerous is this issue?</p>
+                                
+                                <div class="severity-visual">
+                                    <div class="severity-visual-item severity-low" data-severity="low">
+                                        <div class="severity-icon">
+                                            <i class="fas fa-info"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Low</strong>
+                                            <p style="font-size: 0.9rem; margin: 5px 0 0;">Minor issue</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="severity-visual-item severity-medium" data-severity="medium">
+                                        <div class="severity-icon">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Medium</strong>
+                                            <p style="font-size: 0.9rem; margin: 5px 0 0;">Needs attention</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="severity-visual-item severity-high" data-severity="high">
+                                        <div class="severity-icon">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <div>
+                                            <strong>High</strong>
+                                            <p style="font-size: 0.9rem; margin: 5px 0 0;">Immediate danger</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <input type="hidden" id="severityLevel" name="severity" value="" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Upload Image (Optional but helpful)</label>
+                                <div class="image-upload" id="imageUpload">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--secondary-green); margin-bottom: 1rem;"></i>
+                                    <p>Drag & drop or click to upload photo</p>
+                                    <p style="font-size: 0.9rem; color: #666;">JPG, PNG, or GIF • Max 5MB</p>
+                                </div>
+                                <input type="file" id="issueImage" accept="image/*" style="display: none;">
+                                
+                                <div class="image-preview-container" id="imagePreviewContainer">
+                                    <img class="image-preview" id="previewImage" src="" alt="Preview">
+                                    <div>
+                                        <button type="button" id="removeImage" class="btn btn-secondary">
+                                            <i class="fas fa-trash"></i> Remove Image
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="issueDescription">
+                                    <i class="fas fa-comment-dots"></i> Additional Details
+                                </label>
+                                <textarea class="form-control" id="issueDescription" rows="4" 
+                                          placeholder="Describe the issue in detail (size, depth, hazards, exact position on road...)"></textarea>
+                                <small style="display: block; margin-top: 0.5rem; color: #666;">
+                                    <i class="fas fa-lightbulb"></i> Tip: Include details like "near the intersection" or "in the right lane"
+                                </small>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-secondary" id="prevStep2">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="button" class="btn btn-primary" id="nextStep2">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Review & Submit -->
+                        <div class="form-step" id="step3">
+                            <h3 style="margin-bottom: 1.5rem;">
+                                <i class="fas fa-clipboard-check" style="color: var(--secondary-green); margin-right: 10px;"></i>
+                                Review your report
+                            </h3>
+                            
+                            <div class="card" style="margin-bottom: 2rem;">
+                                <div class="card-content">
+                                    <h4>Report Summary</h4>
+                                    <div id="reportSummary">
+                                        <!-- Summary will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="userEmail">
+                                    <i class="fas fa-envelope"></i> Your Email (Optional)
+                                </label>
+                                <input type="email" class="form-control" id="userEmail" placeholder="email@example.com">
+                                <small style="display: block; margin-top: 0.5rem; color: #666;">
+                                    We'll notify you when the issue is resolved. Your email is kept private.
+                                </small>
+                            </div>
+                            
+                            <div style="background-color: rgba(42, 157, 143, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                                <h4 style="margin-top: 0;">
+                                    <i class="fas fa-shield-alt" style="color: var(--secondary-green);"></i> Privacy Notice
+                                </h4>
+                                <p style="margin-bottom: 0;">Your report will be anonymously added to our public map. Personal information is kept confidential and never shared without your consent.</p>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-secondary" id="prevStep3">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit Report
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage">
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4CAF50, #2a9d8f); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <i class="fas fa-check" style="font-size: 2.5rem; color: white;"></i>
+                            </div>
+                            <h3 style="margin-bottom: 1rem;">Report Submitted Successfully!</h3>
+                            <p>Thank you for helping make our roads safer. Your report has been received and will be reviewed by our team.</p>
+                            
+                            <div style="background: white; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                                <h4 style="margin-top: 0;">Reference Information</h4>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <i class="fas fa-hashtag" style="color: var(--secondary-green);"></i>
+                                    <span><strong>Reference ID:</strong> <span id="referenceId" style="font-family: monospace;">SRM-2023-8472</span></span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="fas fa-clock" style="color: var(--secondary-green);"></i>
+                                    <span><strong>Submitted:</strong> <span id="submissionTime">Just now</span></span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-green);"></i>
+                                    <span><strong>Status:</strong> <span style="color: var(--accent-yellow); font-weight: 600;">Pending Review</span></span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" id="reportAnother">
+                                    <i class="fas fa-plus"></i> Report Another Issue
+                                </button>
+                                <a href="map.html" class="btn btn-primary">
+                                    <i class="fas fa-map"></i> View on Map
+                                </a>
+                                <button class="btn btn-secondary" id="printReport">
+                                    <i class="fas fa-print"></i> Print Summary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tips Card -->
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-content">
+                        <h3><i class="fas fa-lightbulb" style="color: var(--accent-yellow); margin-right: 10px;"></i> Tips for Better Reports</h3>
+                        <div class="card-grid" style="margin-top: 1.5rem;">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h4><i class="fas fa-camera"></i> Take Clear Photos</h4>
+                                    <p>Include objects for scale (shoe, car tire, ruler) and show the entire affected area.</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <h4><i class="fas fa-map-pin"></i> Be Specific</h4>
+                                    <p>Note exact location like "100m south of intersection" or "in the bike lane".</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <h4><i class="fas fa-exclamation"></i> Safety First</h4>
+                                    <p>Only report from safe locations. Never put yourself in danger to take photos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Smart Road Monitor</h3>
+                    <p>An AI-powered system for monitoring road conditions in real-time to prevent accidents and improve maintenance efficiency.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="index.html" style="color: var(--light-text); text-decoration: none;">Home</a></li>
+                        <li><a href="about.html" style="color: var(--light-text); text-decoration: none;">About</a></li>
+                        <li><a href="map.html" style="color: var(--light-text); text-decoration: none;">Live Map</a></li>
+                        <li><a href="report.html" style="color: var(--light-text); text-decoration: none;">Report Issue</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Need Immediate Help?</h3>
+                    <p>For emergencies or immediate danger, contact:</p>
+                    <p style="margin-top: 0.5rem;">
+                        <i class="fas fa-phone"></i> 911 (Emergency Services)<br>
+                        <i class="fas fa-road"></i> City Maintenance Hotline: (555) 123-4567
+                    </p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Smart Road Condition Monitoring System. All rights reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Location services require browser permission. Accuracy depends on device capabilities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/report-enhanced.js"></script>
+</body>
+</html>
