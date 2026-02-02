@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authority Dashboard - Smart Road Condition Monitoring System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="dashboard">
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-road logo-icon"></i>
+                    <span>Smart Road Monitor</span>
+                </a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="map.html">Live Road Map</a></li>
+                    <li><a href="report.html">Report Issue</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Authority Dashboard</h2>
+                    <p>Monitor and manage road condition reports</p>
+                    <button class="login-btn" id="loginBtn" style="margin-top: 1rem;">
+                        <i class="fas fa-sign-in-alt"></i> Login as Authority
+                    </button>
+                </div>
+                
+                <!-- Login Prompt (Visible by default) -->
+                <div id="loginPrompt" class="card" style="text-align: center; padding: 3rem;">
+                    <i class="fas fa-lock" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                    <h3>Authority Access Required</h3>
+                    <p>This dashboard is for government authorities and road maintenance teams. Please login to access monitoring tools and management features.</p>
+                    <button class="btn btn-primary" id="loginPromptBtn" style="margin-top: 1rem;">
+                        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                    </button>
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #666;">
+                        <strong>Demo Credentials:</strong> admin / password123
+                    </p>
+                </div>
+                
+                <!-- Dashboard Content (Hidden until login) -->
+                <div id="dashboardContent" style="display: none;">
+                    <!-- User Info Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1rem; background-color: white; border-radius: 10px; box-shadow: var(--card-shadow);">
+                        <div>
+                            <h3 style="margin: 0;">Welcome, <span id="userName">City Maintenance Admin</span></h3>
+                            <p style="margin: 0; color: #666;">Last login: <span id="lastLogin">Today, 09:42 AM</span></p>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Dashboard -->
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card card-total">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Total Complaints</h3>
+                            <p class="stat-number" id="totalComplaints">247</p>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">+12% from last week</p>
+                        </div>
+                        
+                        <div class="dashboard-card card-pending">
+                            <i class="fas fa-clock"></i>
+                            <h3>Pending Issues</h3>
+                            <p class="stat-number" id="pendingIssues">42</p>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">8 high priority</p>
+                        </div>
+                        
+                        <div class="dashboard-card card-resolved">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Resolved Issues</h3>
+                            <p class="stat-number" id="resolvedIssues">189</p>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">76% resolution rate</p>
+                        </div>
+                        
+                        <div class="dashboard-card card-priority">
+                            <i class="fas fa-exclamation"></i>
+                            <h3>Avg. Response Time</h3>
+                            <p class="stat-number" id="avgResponseTime">2.4</p>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">Days</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts Section -->
+                    <div class="card-grid" style="margin-bottom: 2rem;">
+                        <div class="card">
+                            <div class="card-content">
+                                <h3><i class="fas fa-chart-pie" style="color: var(--secondary-green); margin-right: 10px;"></i> Issue Types Distribution</h3>
+                                <div style="height: 250px; display: flex; align-items: center; justify-content: center; margin-top: 1rem;">
+                                    <div id="issueTypeChart" style="width: 100%; height: 100%;">
+                                        <!-- Pie chart will be rendered here -->
+                                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="width: 20px; height: 20px; background-color: #e63946; margin-right: 10px;"></div>
+                                                <div style="flex: 1;">Potholes (45%)</div>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="width: 20px; height: 20px; background-color: #ffc107; margin-right: 10px;"></div>
+                                                <div style="flex: 1;">Cracks (28%)</div>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="width: 20px; height: 20px; background-color: #2a9d8f; margin-right: 10px;"></div>
+                                                <div style="flex: 1;">Speed Humps (15%)</div>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="width: 20px; height: 20px; background-color: #1e3d8f; margin-right: 10px;"></div>
+                                                <div style="flex: 1;">Other (12%)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-content">
+                                <h3><i class="fas fa-chart-line" style="color: var(--secondary-green); margin-right: 10px;"></i> Weekly Trends</h3>
+                                <div style="height: 250px; display: flex; align-items: center; justify-content: center; margin-top: 1rem;">
+                                    <div id="weeklyTrendsChart" style="width: 100%; height: 100%;">
+                                        <!-- Line chart will be rendered here -->
+                                        <div style="display: flex; height: 200px; align-items: flex-end; gap: 20px; justify-content: center;">
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div style="width: 30px; height: 80px; background-color: var(--primary-blue);"></div>
+                                                <div>Mon</div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div style="width: 30px; height: 120px; background-color: var(--primary-blue);"></div>
+                                                <div>Tue</div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div style="width: 30px; height: 90px; background-color: var(--primary-blue);"></div>
+                                                <div>Wed</div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div style="width: 30px; height: 150px; background-color: var(--primary-blue);"></div>
+                                                <div>Thu</div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div style="width: 30px; height: 110px; background-color: var(--primary-blue);"></div>
+                                                <div>Fri</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Reports Table -->
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h3 style="margin: 0;">Recent Reports</h3>
+                                <div>
+                                    <button class="btn btn-secondary" id="refreshBtn" style="margin-right: 10px;">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
+                                    <button class="btn btn-primary" id="exportBtn">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div style="overflow-x: auto;">
+                                <table class="issues-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Location</th>
+                                            <th>Priority</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reportsTableBody">
+                                        <!-- Reports will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                                <div>
+                                    Showing <span id="showingCount">10</span> of <span id="totalCount">247</span> reports
+                                </div>
+                                <div>
+                                    <button class="btn btn-secondary" id="prevPage" disabled>
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </button>
+                                    <button class="btn btn-secondary" id="nextPage">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Assignment Section -->
+                    <div class="card" style="margin-top: 2rem;">
+                        <div class="card-content">
+                            <h3><i class="fas fa-users" style="color: var(--secondary-green); margin-right: 10px;"></i> Team Management</h3>
+                            <div class="card-grid" style="margin-top: 1.5rem;">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <h4>Team Alpha</h4>
+                                        <p><strong>Status:</strong> <span style="color: var(--secondary-green);">Available</span></p>
+                                        <p><strong>Current Assignment:</strong> Main Street repairs</p>
+                                        <p><strong>Issues Resolved:</strong> 42 this month</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-content">
+                                        <h4>Team Beta</h4>
+                                        <p><strong>Status:</strong> <span style="color: #ffc107;">On Break</span></p>
+                                        <p><strong>Current Assignment:</strong> Park Avenue inspection</p>
+                                        <p><strong>Issues Resolved:</strong> 38 this month</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-content">
+                                        <h4>Team Gamma</h4>
+                                        <p><strong>Status:</strong> <span style="color: var(--accent-red);">On Emergency</span></p>
+                                        <p><strong>Current Assignment:</strong> Highway pothole</p>
+                                        <p><strong>Issues Resolved:</strong> 51 this month</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Authority Login</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginUsername">Username</label>
+                    <input type="text" class="form-control" id="loginUsername" placeholder="Enter username" value="admin">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" value="password123">
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                    <a href="#" style="color: var(--primary-blue); text-decoration: none;">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                
+                <div style="margin-top: 1.5rem; padding: 1rem; background-color: rgba(42, 157, 143, 0.1); border-radius: 5px; font-size: 0.9rem;">
+                    <strong>Demo Access:</strong> Use "admin" as username and "password123" as password to test the dashboard.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Smart Road Monitor</h3>
+                    <p>An AI-powered system for monitoring road conditions in real-time to prevent accidents and improve maintenance efficiency.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="index.html" style="color: var(--light-text); text-decoration: none;">Home</a></li>
+                        <li><a href="about.html" style="color: var(--light-text); text-decoration: none;">About</a></li>
+                        <li><a href="map.html" style="color: var(--light-text); text-decoration: none;">Live Map</a></li>
+                        <li><a href="report.html" style="color: var(--light-text); text-decoration: none;">Report Issue</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Authority Resources</h3>
+                    <p>Access additional resources and documentation for government authorities.</p>
+                    <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">
+                        <i class="fas fa-file-download"></i> Download API Docs
+                    </a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Smart Road Condition Monitoring System. All rights reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Dashboard access restricted to authorized personnel only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
