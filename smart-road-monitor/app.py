@@ -1,7 +1,7 @@
 import eventlet
 eventlet.monkey_patch()
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_cors import CORS
 from config import Config
@@ -9,11 +9,7 @@ from models import MongoDB
 from auth import login_manager, create_user
 from routes import register_routes
 from websocket_handler import socketio
-import eventlet
 import os
-
-# Patch sockets for eventlet
-eventlet.monkey_patch()
 
 def create_app(config_class=Config):
     """Create and configure Flask application"""
@@ -25,9 +21,10 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     
     # Initialize MongoDB
-    #with app.app_context():
-        #mongo = MongoDB()
-        #app.mongo = None
+    with app.app_context():
+        mongo = MongoDB()
+        mongo.init_db()  # Ensure database is initialized
+        app.mongo = mongo
     
     # Register routes
     register_routes(app)
@@ -53,6 +50,7 @@ def create_app(config_class=Config):
             admin_user.password_hash = generate_password_hash('admin123')
             admin_user.full_name = 'System Administrator'
             admin_user.role = 'admin'
+            admin_user.department = 'Administration'
             admin_user.save()
             print("Default admin user created: admin@smartroads.com / admin123")
         
@@ -65,6 +63,7 @@ def create_app(config_class=Config):
             system_user.password_hash = generate_password_hash('system123')
             system_user.full_name = 'AI Detection System'
             system_user.role = 'authority'
+            system_user.department = 'System'
             system_user.save()
             print("System user created for AI detections")
         
