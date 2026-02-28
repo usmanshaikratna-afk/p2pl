@@ -19,6 +19,15 @@ class Config:
     UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     
+      
+    # Map configuration
+    MAP_CENTER = [13.0827, 80.2707]  # Default center (Chennai)
+    MAP_ZOOM = 8
+    MAX_REPORTS_ON_MAP = 500
+    
+    # API rate limiting (if you want to implement)
+    RATELIMIT_ENABLED = True
+    RATELIMIT_DEFAULT = "100 per minute"
     # Session configuration
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
     

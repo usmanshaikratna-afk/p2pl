@@ -3,23 +3,229 @@
 {% block title %}Home - Smart Road Monitor{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1>Making Roads Safer with Smart Technology</h1>
-            <p>Our AI-powered system detects road defects like potholes, cracks, and unmarked speed humps in real-time, helping prevent accidents and improve road maintenance efficiency.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-                <a href="{{ url_for('map_page') }}" class="btn btn-primary">
+<!-- Hero Section with Full-Screen Moving Background -->
+<section class="hero" style="position: relative; min-height: 90vh; overflow: hidden; padding: 0;">
+    
+    <!-- Full-Screen Moving Background Container -->
+    <div class="moving-bg-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+        
+        <!-- Gradient Overlay - Reduced opacity for better image visibility -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10, 36, 99, 0.4) 0%, rgba(30, 61, 143, 0.4) 50%, rgba(42, 157, 143, 0.3) 100%); z-index: 2;"></div>
+        
+        <!-- Image Slider Container - One full image at a time -->
+        <div class="image-slider" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden;">
+            
+            <!-- First Full Image -->
+            <div class="image-layer layer-1" style="position: absolute; top: 0; left: 0; width:90%; height: 95%; animation: slideHorizontalFull 15s ease-in-out infinite;">
+                <img src="{{ url_for('static', filename='images/download4.jpg') }}" 
+                     alt="Large pothole on road"
+                     style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9; filter: brightness(1.1) contrast(1.3);">
+                <div style="position: absolute; bottom: 30px; left: 30px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-size: 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--accent-yellow);"></i> Pothole Detected - High Priority
+                </div>
+            </div>
+            
+            <!-- Second Full Image -->
+            <div class="image-layer layer-2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: slideHorizontalFull 15s ease-in-out infinite 5s; opacity: 0;">
+                <img src="{{ url_for('static', filename='images/download3.jpg') }}" 
+                     alt="Deep crack in asphalt"
+                     style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9; filter: brightness(1.1) contrast(1.3);">
+                <div style="position: absolute; bottom: 30px; left: 30px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-size: 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--accent-yellow);"></i> Deep Crack - Medium Priority
+                </div>
+            </div>
+            
+            <!-- Third Full Image -->
+            <div class="image-layer layer-3" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: slideHorizontalFull 15s ease-in-out infinite 10s; opacity: 0;">
+                <img src="{{ url_for('static', filename='images/download1.jpg') }}" 
+                     alt="Road deterioration"
+                     style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9; filter: brightness(1.1) contrast(1.3);">
+                <div style="position: absolute; bottom: 30px; left: 30px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-size: 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--accent-yellow);"></i> Road Deterioration - Low Priority
+                </div>
+            </div>
+            
+            <!-- Fourth Full Image -->
+            <div class="image-layer layer-4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: slideHorizontalFull 15s ease-in-out infinite 0s; opacity: 0;">
+                <img src="{{ url_for('static', filename='images/download2.jpg') }}" 
+                     alt="Water-filled pothole"
+                     style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9; filter: brightness(1.1) contrast(1.3);">
+                <div style="position: absolute; bottom: 30px; left: 30px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-size: 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--accent-yellow);"></i> Water-filled Pothole - High Priority
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Grid Pattern - Very subtle -->
+        <div class="grid-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: 
+            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: 3; animation: gridMove 20s linear infinite;"></div>
+        
+        <!-- Floating Particles - Enhanced visibility -->
+        <div class="particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4;">
+            <div class="particle" style="position: absolute; top: 20%; left: 10%; width: 12px; height: 12px; background: rgba(255, 193, 7, 0.5); border-radius: 50%; animation: float 8s infinite; box-shadow: 0 0 15px rgba(255,193,7,0.3);"></div>
+            <div class="particle" style="position: absolute; top: 60%; left: 80%; width: 18px; height: 18px; background: rgba(42, 157, 143, 0.5); border-radius: 50%; animation: float 12s infinite; box-shadow: 0 0 15px rgba(42,157,143,0.3);"></div>
+            <div class="particle" style="position: absolute; top: 80%; left: 30%; width: 15px; height: 15px; background: rgba(230, 57, 70, 0.4); border-radius: 50%; animation: float 15s infinite; box-shadow: 0 0 15px rgba(230,57,70,0.3);"></div>
+            <div class="particle" style="position: absolute; top: 40%; left: 60%; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.4); border-radius: 50%; animation: float 10s infinite; box-shadow: 0 0 10px white;"></div>
+        </div>
+        
+        <!-- Dynamic Light Effect -->
+        <div class="light-effect" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 50%, rgba(255,193,7,0.15), transparent 60%); animation: rotate 30s linear infinite; z-index: 5;"></div>
+    </div>
+    
+    <!-- Content Overlay - Enhanced text visibility -->
+    <div class="container" style="position: relative; z-index: 10; height: 90vh; display: flex; align-items: center;">
+        <div style="max-width: 700px; color: white; text-shadow: 2px 2px 15px rgba(0,0,0,0.8); background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 20px; backdrop-filter: blur(5px);">
+            <h1 style="font-size: 4rem; margin-bottom: 1.5rem; font-weight: 700; line-height: 1.2; animation: fadeInUp 1s ease;">
+                Making Roads Safer with <span style="color: var(--accent-yellow); text-shadow: 0 0 20px rgba(255,193,7,0.5);">Smart Technology</span>
+            </h1>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 1; line-height: 1.6; animation: fadeInUp 1.2s ease;">
+                Our AI-powered system detects road defects like potholes, cracks, and unmarked speed humps in real-time, helping prevent accidents and improve road maintenance efficiency.
+            </p>
+            
+            <!-- Animated Stats Preview - Enhanced visibility -->
+            <div style="display: flex; gap: 2.5rem; margin-bottom: 2.5rem; animation: fadeInUp 1.4s ease; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 15px;">
+                <div>
+                    <div style="font-size: 2.8rem; font-weight: 700; color: var(--accent-yellow); text-shadow: 0 0 20px rgba(255,193,7,0.5);">94%</div>
+                    <div style="font-size: 1rem; opacity: 1; font-weight: 500;">Detection Accuracy</div>
+                </div>
+                <div>
+                    <div style="font-size: 2.8rem; font-weight: 700; color: var(--accent-yellow); text-shadow: 0 0 20px rgba(255,193,7,0.5);">1.2M+</div>
+                    <div style="font-size: 1rem; opacity: 1; font-weight: 500;">Roads Monitored</div>
+                </div>
+                <div>
+                    <div style="font-size: 2.8rem; font-weight: 700; color: var(--accent-yellow); text-shadow: 0 0 20px rgba(255,193,7,0.5);">24/7</div>
+                    <div style="font-size: 1rem; opacity: 1; font-weight: 500;">Real-time Tracking</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; animation: fadeInUp 1.6s ease;">
+                <a href="{{ url_for('map_page') }}" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.2rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); background: var(--accent-yellow); color: var(--primary-dark); font-weight: 600;">
                     <i class="fas fa-map-marked-alt"></i> View Road Map
                 </a>
-                <a href="{{ url_for('report') }}" class="btn btn-secondary">
+                <a href="{{ url_for('report') }}" class="btn btn-secondary" style="padding: 1rem 2.5rem; font-size: 1.2rem; border-radius: 50px; background: rgba(255,255,255,0.2); border: 2px solid white; backdrop-filter: blur(5px); color: white; font-weight: 600;">
                     <i class="fas fa-exclamation-triangle"></i> Report Road Issue
                 </a>
             </div>
         </div>
     </div>
+    
+    <!-- Scroll Indicator -->
+    <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; color: white; text-align: center; animation: bounce 2s infinite; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 50px; backdrop-filter: blur(5px);">
+        <div style="font-size: 0.9rem; margin-bottom: 5px; opacity: 1;">Scroll to explore</div>
+        <i class="fas fa-chevron-down" style="font-size: 1.5rem;"></i>
+    </div>
 </section>
+
+<!-- Add Complex Animations -->
+<style>
+    @keyframes slideHorizontalFull {
+        0% { 
+            transform: scale(1);
+            opacity: 0;
+        }
+        10% { 
+            opacity: 1;
+        }
+        25% { 
+            transform: scale(1.05);
+        }
+        40% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        45% {
+            opacity: 0;
+            transform: scale(1.15);
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+    
+    @keyframes gridMove {
+        0% { transform: translateX(0) translateY(0); }
+        100% { transform: translateX(50px) translateY(50px); }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        25% { transform: translateY(-20px) translateX(10px); }
+        50% { transform: translateY(-30px) translateX(-10px); }
+        75% { transform: translateY(-10px) translateX(-20px); }
+    }
+    
+    @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-20px); }
+        60% { transform: translateX(-50%) translateY(-10px); }
+    }
+    
+    .image-layer {
+        will-change: transform, opacity;
+    }
+    
+    .image-layer:hover {
+        animation-play-state: paused !important;
+    }
+    
+    .image-layer:hover img {
+        transform: scale(1.1);
+        filter: brightness(1.3) contrast(1.5) !important;
+    }
+    
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem !important;
+        }
+        
+        .hero p {
+            font-size: 1.1rem !important;
+        }
+        
+        .hero .btn {
+            padding: 0.8rem 1.5rem !important;
+            font-size: 1rem !important;
+        }
+        
+        .hero .btn i {
+            margin-right: 5px;
+        }
+        
+        div[style*="gap: 2.5rem"] {
+            gap: 1rem !important;
+            flex-wrap: wrap;
+        }
+        
+        div[style*="font-size: 2.8rem"] {
+            font-size: 2rem !important;
+        }
+        
+        .image-layer div[style*="bottom: 30px"] {
+            bottom: 10px !important;
+            left: 10px !important;
+            font-size: 0.8rem !important;
+            padding: 5px 10px !important;
+        }
+    }
+</style>
 
 <!-- Stats Section -->
 <section class="section-padding">

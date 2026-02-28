@@ -10,3 +10,5 @@ Pillow==10.0.0
 Werkzeug==2.3.7
 geopy==2.3.0
 requests==2.31.0
+Flask-SocketIO==5.3.4
+python-socketio==5.9.0
